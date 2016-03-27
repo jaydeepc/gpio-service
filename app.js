@@ -10,7 +10,7 @@ app.get('/on/:pin', function(req, res) {
   gpio.open(gpioPin, "output", function(err) {
     gpio.write(gpioPin, 1, function() {
       console.log('Pin '+ gpioPin +' is now HIGH.');
-			res.sendStatus(200);
+			res.send(200, {"status": "on"});
     });
   });
 });
@@ -21,7 +21,7 @@ app.get('/off/:pin', function(req, res) {
   gpio.open(gpioPin, "output", function(err) {
 		gpio.write(gpioPin, 0, function() {
 			console.log('Pin '+ gpioPin +' is now LOW.');
-			res.sendStatus(200);
+			res.send(200, {"status": "off"});
 		});
   });
 });
