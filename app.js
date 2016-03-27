@@ -11,6 +11,7 @@ app.get('/on/:pin', function(req, res) {
     gpio.write(gpioPin, 1, function() {
       console.log('Pin '+ gpioPin +' is now HIGH.');
 			res.sendStatus(200);
+			res.send(200, {"status": "on"});
     });
   });
 });
