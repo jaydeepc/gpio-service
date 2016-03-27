@@ -4,18 +4,24 @@ var app = express();
 
 var gpio = require("pi-gpio");
 
-app.get('/on/:pin', function(req, res) {
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.get('/on/:pin', function(req, res, next) {
   gpioPin = req.params.pin;
 	gpio.close(gpioPin);
   gpio.open(gpioPin, "output", function(err) {
     gpio.write(gpioPin, 1, function() {
       console.log('Pin '+ gpioPin +' is now HIGH.');
-			res.send(200, {"status": "on"});
+	res.send(200, {"status": "on"});
     });
   });
 });
 
-app.get('/off/:pin', function(req, res) {
+app.get('/off/:pin', function(req, res, next) {
   gpioPin = req.params.pin;
 	gpio.close(gpioPin);
   gpio.open(gpioPin, "output", function(err) {
