@@ -1,36 +1,48 @@
+var http = require('http');
 var express = require('express');
-var bodyParser = require('body-parser');
-var gpio = require('pi-gpio');
-
 var app = express();
-app.use(bodyParser.json());
-app.set('port', process.env.PORT || 3000);
 
-app.get('/:pin', function(req, res){
-  var pin = req.params.pin;
+var gpio = require("pi-gpio");
 
-  gpio.open(pin, 'input', function(err) {
-    gpio.read(pin, function(err, value) {
-      res.send(200, {value: value});
-      gpio.close(pin);
+app.get('/on/:pin', function(req, res) {
+  gpioPin = req.params.pin;
+	gpio.close(gpioPin);
+  gpio.open(gpioPin, "output", function(err) {
+    gpio.write(gpioPin, 1, function() {
+      console.log('Pin '+ gpioPin +' is now HIGH.');
+			res.sendStatus(200);
     });
   });
 });
 
-app.put('/:pin', function(req, res) {
-  var pin = req.params.pin;
-  var value = req.body.value;
-
-  gpio.open(pin, 'output', function(err) {
-    gpio.write(pin, value, function(err) {
-      res.send(200);
-      gpio.close(pin);
-    });
+app.get('/off/:pin', function(req, res) {
+  gpioPin = req.params.pin;
+	gpio.close(gpioPin);
+  gpio.open(gpioPin, "output", function(err) {
+		gpio.write(gpioPin, 0, function() {
+			console.log('Pin '+ gpioPin +' is now LOW.');
+			res.sendStatus(200);
+		});
   });
 });
 
-var server = app.listen(app.get('port'), function() {
-  console.log('Listening on port %d', server.address().port);
+app.get('/blink/:pin/:time', function(req, res) {
+	gpioPin = req.params.pin;
+	time = req.params.time;
+	gpio.close(gpioPin);
+  gpio.open(gpioPin, "output", function(err) {
+    gpio.write(gpioPin, 1, function() {
+      console.log('Pin '+ gpioPin +' is now HIGH.');
+    });
+    setTimeout(function() {
+      gpio.write(gpioPin, 0, function() {
+        console.log('Pin '+ gpioPin +' is now LOW.');
+				res.sendStatus(200);
+        gpio.close(gpioPin);
+      });
+    }, time);
+  });
 });
 
-
+app.listen(3001);
+console.log('App Server running at port 3001');
