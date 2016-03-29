@@ -6,7 +6,11 @@
           logoutPhase1 = 800,
           $login = $(".login"),
           $app = $(".app");
-          $app_2 = $(".app_2")
+          $cards = $(".cards")
+          $master_bed = $(".master_bed")
+          $kitchen = $(".kitchen")
+          $bulb_img = $("#bulb-img")
+          $fan_img = $("#fan-img")
 
           function ripple(elem, e) {
             $(".ripple").remove();
@@ -43,6 +47,8 @@
           });
 
           $(document).on("click", ".card-left", function(e) {
+            var ele = $(this).attr('name')
+            var $element = $('.' + ele);
             if (animating) return;
             animating = true;
             var that = this;
@@ -51,14 +57,16 @@
             setTimeout(function() {
               $(that).addClass("success");
               setTimeout(function() {
-                $app_2.show();
-                $app_2.css("top");
-                $app_2.addClass("active");
+                $app.show();
+                $app.css("top");
+                $app.addClass("active");
+                $element.show();
               }, submitPhase2 - 70);
               setTimeout(function() {
-                $app.hide();
-                $app.addClass("inactive");
-                animating = false;
+                $cards.hide();
+//                $app.hide();
+//                $app.addClass("inactive");
+//                animating = false;
                 $(that).removeClass("success processing");
               }, submitPhase2);
             }, submitPhase1);
@@ -81,5 +89,28 @@
               animating = false;
               $(that).removeClass("clicked");
             }, logoutPhase1);
+          });
+
+          $(document).on("change", ".switch-input", function(e) {
+            var ele = $(this).closest("div").attr("class");
+            if (ele == "lights"){
+                if($(this).is(":checked")){
+                    $bulb_img.attr("src", "images/bulb_on.png");
+                    $(".app__top").css("background", "rgba(247, 222, 8, 0.18)")
+                }
+                else{
+                    $bulb_img.attr("src", "images/bulb.png")
+                    $(".app__top").css("background", "rgba(0, 0, 0, 0.5)")
+                }
+            }
+            else if (ele == "fans"){
+                if($(this).is(":checked")){
+                    $(this).closest("label").prev().attr("class", "image-rotate");
+                }
+                else{
+                    $(this).closest("label").prev().attr("class", "image");
+                }
+
+            }
           });
     });

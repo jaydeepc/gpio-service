@@ -10,8 +10,18 @@
     <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans'>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/switch.css">
+    <link rel="stylesheet" href="css/fan.css">
 
     <script src="js/login.js"></script>
+    <script>
+      $(function(){
+          $("ul li").click(function(){
+            $("ul li").removeClass("on");
+            $(this).addClass("on");
+          });
+      });
+    </script>
   </head>
 
   <body>
@@ -39,9 +49,9 @@
           <span></span>
         </div>
         <div class="cards">
-          <button class="card-left"><img src="images/masterbed.png" width="80px"></button>
+          <button class="card-left" name="master_bed"><img src="images/masterbed.png" width="80px"></button>
           <button class="card-right"><img src="images/guestbed.png" width="80px"></button>
-          <button class="card-left"><img src="images/kitchen.png" width="80px"></button>
+          <button class="card-left" name="kitchen"><img src="images/kitchen.png" width="80px"></button>
           <button class="card-right"><img src="images/living_room.png" width="80px"></button>
           <button class="card-left"><img src="images/master_bath.png" width="80px"></button>
           <button class="card-right"><img src="images/guest_bath.png" width="80px"></button>
@@ -54,25 +64,35 @@
         </svg>
       </div>
     </div>
+    <div class="master_bed" style="display:none;">
+      <div class="lights">
+        <img id="bulb-img" src="images/bulb.png">
+        <label class="switch">
+            <input class="switch-input" type="checkbox" />
+            <span class="switch-label" data-on="On" data-off="Off"></span>
+            <span class="switch-handle"></span>
+        </label>
+      </div>
 
-    <div class="app_2">
-      <div class="app__top_2">
-        <div class="app__menu-btn">
-          <span></span>
-        </div>
-        <div class="cards">
-
-        </div>
+      <div class="fans">
+        <img class="image" src="images/fan.png" alt="">
+        <label class="switch">
+            <input class="switch-input" type="checkbox" />
+            <span class="switch-label" data-on="On" data-off="Off"></span>
+            <span class="switch-handle"></span>
+        </label>
 
       </div>
-      <div class="app__logout">
-        <svg class="app__logout-icon svg-icon" viewBox="0 0 20 20">
-          <path d="M6,3 a8,8 0 1,0 8,0 M10,0 10,12"/>
-        </svg>
-      </div>
+      <div class="plugs"></div>
+
     </div>
-
+    <div class="kitchen" style="display:none;">
+      <img class="image-rotate" src="images/fan.png" alt="" width="80px">
+    </div>
+    </div>
   </div>
 </div>
+
+
   </body>
 </html>
