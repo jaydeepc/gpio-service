@@ -11,6 +11,7 @@
           $kitchen = $(".kitchen")
           $bulb_img = $("#bulb-img")
           $fan_img = $("#fan-img")
+          $appliances = $(".appliances")
 
           function ripple(elem, e) {
             $(".ripple").remove();
@@ -64,9 +65,6 @@
               }, submitPhase2 - 70);
               setTimeout(function() {
                 $cards.hide();
-//                $app.hide();
-//                $app.addClass("inactive");
-//                animating = false;
                 $(that).removeClass("success processing");
               }, submitPhase2);
             }, submitPhase1);
@@ -91,36 +89,39 @@
             }, logoutPhase1);
           });
 
-          $(document).on("change", ".switch-input", function(e) {
-            var ele = $(this).closest("div").attr("class");
-            if (ele == "lights"){
-                if($(this).is(":checked")){
+          $(document).on("click", ".card-left-appl", function(e) {
+            var ele = $(this).attr("name");
+            var on_off = $(this).attr("status");
+            if (ele == "light_1"){
+                if(on_off == "off"){
                     $bulb_img.attr("src", "images/bulb_on.png");
-                    $(".app__top").css("background", "rgba(247, 222, 8, 0.18)")
+                    $(this).css("background", "rgba(247, 222, 8, 0.18)")
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
                         url: "http://192.168.0.101:3001/on/18"
                     });
-
+                    $(this).attr("status", "on");
                 }
                 else{
                     $bulb_img.attr("src", "images/bulb.png")
-                    $(".app__top").css("background", "rgba(0, 0, 0, 0.5)")
+                    $(this).css("background", "rgba(253, 252, 253, 0.15)")
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
                         url: "http://192.168.0.101:3001/off/18"
                     });
-
+                    $(this).attr("status", "off");
                 }
             }
-            else if (ele == "fans"){
-                if($(this).is(":checked")){
-                    $(this).closest("label").prev().attr("class", "image-rotate");
+            else if (ele == "fan_1"){
+                if(on_off == "off"){
+                    $(this).find("img").attr("class", "image-rotate");
+                    $(this).attr("status", "on");
                 }
                 else{
-                    $(this).closest("label").prev().attr("class", "image");
+                    $(this).find("img").attr("class", "image");
+                    $(this).attr("status", "off");
                 }
 
             }
