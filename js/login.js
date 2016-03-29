@@ -97,10 +97,22 @@
                 if($(this).is(":checked")){
                     $bulb_img.attr("src", "images/bulb_on.png");
                     $(".app__top").css("background", "rgba(247, 222, 8, 0.18)")
+                    $.ajax({
+                        type: "GET",
+                        dataType: 'text',
+                        url: "http://localhost:3001/on/18"
+                    });
+
                 }
                 else{
                     $bulb_img.attr("src", "images/bulb.png")
                     $(".app__top").css("background", "rgba(0, 0, 0, 0.5)")
+                    $.ajax({
+                        type: "GET",
+                        dataType: 'text',
+                        url: "http://localhost:3001/off/18"
+                    });
+
                 }
             }
             else if (ele == "fans"){
