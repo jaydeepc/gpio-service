@@ -100,7 +100,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://localhost:3001/on/18"
+                        url: "http://192.168.0.101:3001/on/18"
                     });
 
                 }
@@ -110,7 +110,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://localhost:3001/off/18"
+                        url: "http://192.168.0.101:3001/off/18"
                     });
 
                 }
