@@ -48,12 +48,12 @@ input, button {
 
 .demo {
     position: absolute;
-    top: 42%;
-    left: 42%;
-    margin-left: -15rem;
-    margin-top: -26.5rem;
-    width: 36rem;
-    height: 63rem;
+    /* top: 23%; */
+    /* left: 18%; */
+    /* margin-left: -15rem; */
+    /* margin-top: -26.5rem; */
+    width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 
