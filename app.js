@@ -32,6 +32,21 @@ app.get('/off/:pin', function(req, res, next) {
   });
 });
 
+app.get('/status', function(req, res, next) {
+    gpioPin = req.query.pin;
+    response_dict = {};
+    for (i=0; i<gpioPin.length; i++){
+        gpio.open(gpioPin, "output", function(err) {
+		    gpio.read(gpioPin, function() {
+			    console.log('Pin '+ gpioPin +' is.' + value);
+			    response_dict[gpioPin[i]] = value;
+		    });
+        });
+    }
+    res.send(200, response_dict);
+  });
+
+
 app.get('/blink/:pin/:time', function(req, res) {
 	gpioPin = req.params.pin;
 	time = req.params.time;

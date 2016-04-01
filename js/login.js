@@ -61,6 +61,24 @@
                 $app.show();
                 $app.css("top");
                 $app.addClass("active");
+                var appl_status = "";
+                $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: "http://127.0.0.1:3001/status?pin=18&pin=17",
+                    success:function(data)
+                    {
+                        appl_status = JSON.parse(data);
+                        $element.find("button").each(function(){
+                            pin = parseInt($(this).attr("pin"));
+                            if(pin in appl_status){
+                                $(this).find("img").attr("src", "images/bulb_on.png");
+                                $(this).css("background", "rgba(247, 222, 8, 0.18)")
+                                $(this).attr("status", "on");
+                            }
+                        });
+                    }
+                });
                 $element.show();
               }, submitPhase2 - 70);
               setTimeout(function() {
