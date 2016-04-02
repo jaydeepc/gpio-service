@@ -32,18 +32,13 @@ app.get('/off/:pin', function(req, res, next) {
   });
 });
 
-app.get('/status', function(req, res, next) {
-    gpioPin = req.query.pin;
-    response_dict = {};
-    for (i=0; i<gpioPin.length; i++){
+app.get('/status/:pin', function(req, res, next) {
+        gpioPin = req.params.pin;
         gpio.open(gpioPin, "output", function(err) {
-		    gpio.read(gpioPin, function() {
-			    console.log('Pin '+ gpioPin +' is.' + value);
-			    response_dict[gpioPin[i]] = value;
-		    });
+                gpio.read(gpioPin, function(err, value){
+                        res.status(200).send({"status":value});
+                });
         });
-    }
-    res.send(200, response_dict);
   });
 
 

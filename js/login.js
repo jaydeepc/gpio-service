@@ -62,16 +62,18 @@
                 $app.css("top");
                 $app.addClass("active");
                 var appl_status = "";
+                var pin_1 = "18";
+                var pin_2 = "22";
                 $.ajax({
                     type: "GET",
                     dataType: 'text',
-                    url: "http://127.0.0.1:3001/status?pin=18&pin=17",
+                    url: "http://192.168.0.106:3001/status/" + pin_1,
                     success:function(data)
                     {
                         appl_status = JSON.parse(data);
                         $element.find("button").each(function(){
                             pin = parseInt($(this).attr("pin"));
-                            if(pin in appl_status){
+                            if(pin == pin_1 & appl_status.status == 1){
                                 $(this).find("img").attr("src", "images/bulb_on.png");
                                 $(this).css("background", "rgba(247, 222, 8, 0.18)")
                                 $(this).attr("status", "on");
@@ -79,6 +81,25 @@
                         });
                     }
                 });
+
+                $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: "http://192.168.0.106:3001/status/" + pin_2,
+                    success:function(data)
+                    {
+                        appl_status = JSON.parse(data);
+                        $element.find("button").each(function(){
+                            pin = parseInt($(this).attr("pin"));
+                            if(pin == pin_2 & appl_status.status == 1){
+                                $(this).find("img").attr("src", "images/bulb_on.png");
+                                $(this).css("background", "rgba(247, 222, 8, 0.18)")
+                                $(this).attr("status", "on");
+                            }
+                        });
+                    }
+                });
+
                 $element.show();
               }, submitPhase2 - 70);
               setTimeout(function() {
@@ -110,6 +131,7 @@
           $(document).on("click", ".card-left-appl", function(e) {
             var ele = $(this).attr("name");
             var on_off = $(this).attr("status");
+            var pin =  $(this).attr("pin");
             if (ele == "light"){
                 if(on_off == "off"){
                     $(this).find("img").attr("src", "images/bulb_on.png");
@@ -117,7 +139,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://192.168.0.101:3001/on/18"
+                        url: "http://192.168.0.106:3001/on/" + pin
                     });
                     $(this).attr("status", "on");
                 }
@@ -127,7 +149,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://192.168.0.101:3001/off/18"
+                        url: "http://192.168.0.106:3001/off/" + pin
                     });
                     $(this).attr("status", "off");
                 }
@@ -147,6 +169,7 @@
           $(document).on("click", ".card-right-appl", function(e) {
             var ele = $(this).attr("name");
             var on_off = $(this).attr("status");
+            var pin =  $(this).attr("pin");
             if (ele == "light"){
                 if(on_off == "off"){
                     $(this).find("img").attr("src", "images/bulb_on.png");
@@ -154,7 +177,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://192.168.0.101:3001/on/18"
+                        url: "http://192.168.0.106:3001/on/" + pin
                     });
                     $(this).attr("status", "on");
                 }
@@ -164,7 +187,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://192.168.0.101:3001/off/18"
+                        url: "http://192.168.0.106:3001/off/" + pin
                     });
                     $(this).attr("status", "off");
                 }
