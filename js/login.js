@@ -67,7 +67,7 @@
                 $.ajax({
                     type: "GET",
                     dataType: 'text',
-                    url: "http://10.4.2.166:3001/status/" + pin_1,
+                    url: "http://192.168.0.107:3001/status/" + pin_1,
                     success:function(data)
                     {
                         appl_status = JSON.parse(data);
@@ -80,12 +80,12 @@
                             }
                         });
                     }
-                });
+                }).then(function(response){
 
-                $.ajax({
+                return $.ajax({
                     type: "GET",
                     dataType: 'text',
-                    url: "http://10.4.2.166:3001/status/" + pin_2,
+                    url: "http://192.168.0.107:3001/status/" + pin_2,
                     success:function(data)
                     {
                         appl_status = JSON.parse(data);
@@ -99,7 +99,7 @@
                         });
                     }
                 });
-
+                });
                 $element.show();
               }, submitPhase2 - 70);
               setTimeout(function() {
@@ -139,7 +139,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://10.4.2.166:3001/on/" + pin
+                        url: "http://192.168.0.107:3001/on/" + pin
                     });
                     $(this).attr("status", "on");
                 }
@@ -149,7 +149,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://10.4.2.166:3001/off/" + pin
+                        url: "http://192.168.0.107:3001/off/" + pin
                     });
                     $(this).attr("status", "off");
                 }
@@ -177,7 +177,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://10.4.2.166:3001/on/" + pin
+                        url: "http://192.168.0.107:3001/on/" + pin
                     });
                     $(this).attr("status", "on");
                 }
@@ -187,7 +187,7 @@
                     $.ajax({
                         type: "GET",
                         dataType: 'text',
-                        url: "http://10.4.2.166:3001/off/" + pin
+                        url: "http://192.168.0.107:3001/off/" + pin
                     });
                     $(this).attr("status", "off");
                 }
