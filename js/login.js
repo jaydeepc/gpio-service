@@ -62,8 +62,9 @@
                 $app.css("top");
                 $app.addClass("active");
                 var appl_status = "";
-                var pin_1 = "18";
-                var pin_2 = "22";
+                var pin_1 = "16";
+                var pin_2 = "18";
+                var pin_3 = "22";
                 $.ajax({
                     type: "GET",
                     dataType: 'text',
@@ -99,6 +100,26 @@
                         });
                     }
                 });
+                }).then(function(response){
+
+                return $.ajax({
+                    type: "GET",
+                    dataType: 'text',
+                    url: "http://192.168.0.107:3001/status/" + pin_3,
+                    success:function(data)
+                    {
+                        appl_status = JSON.parse(data);
+                        $element.find("button").each(function(){
+                            pin = parseInt($(this).attr("pin"));
+                            if(pin == pin_3 & appl_status.status == 1){
+                                $(this).find("img").attr("class", "image-rotate");
+                                $(this).attr("status", "on");
+                            }
+                        });
+                    }
+                });
+
+
                 });
                 $element.show();
               }, submitPhase2 - 70);
@@ -156,10 +177,22 @@
             }
             else if (ele == "fan_1"){
                 if(on_off == "off"){
+                    $.ajax({
+                        type: "GET",
+                        dataType: 'text',
+                        url: "http://192.168.0.107:3001/on/" + pin
+                    });
+
                     $(this).find("img").attr("class", "image-rotate");
                     $(this).attr("status", "on");
                 }
                 else{
+                    $.ajax({
+                        type: "GET",
+                        dataType: 'text',
+                        url: "http://192.168.0.107:3001/off/" + pin
+                    });
+
                     $(this).find("img").attr("class", "image");
                     $(this).attr("status", "off");
                 }
